@@ -33,23 +33,6 @@ const ListaGeneralUE = () => {
       fetchingDatosGeneralUE();
     }, []);
 
-    // console.log(datosUnidadEducativa.data);
-
-    
-    // useEffect(() => {
-    //   const fetchingTurno=async()=>{
-    //     try{
-    //         const baseUrl = import.meta.env.VITE_BASE_URL;
-    //         const url = baseUrl + '/turnos';
-    //         const datosTipoColegio = await axios.get(url);
-    //         setTurno( datosTipoColegio.data);
-    //       }catch(error){
-    //       console.log('Error al obtener Datos Tipo Colegio',error);
-    //     }
-    //   };
-    //   fetchingTurno();
-    // }, []);
-    
 
     const changeRutaNuevoFormulario=()=>{
         navigate('/unidadeducativa/agregarnuevo');
@@ -57,19 +40,7 @@ const ListaGeneralUE = () => {
 
    
 
-    // useEffect(() => {
-    //   const fetchingEstructura = async()=>{
-    //     try{
-    //       const baseUrl = import.meta.env.VITE_BASE_URL;
-    //       const url = baseUrl + '/infraestructuras';
-    //       const datosInfraEstructura =await axios.get(url);
-    //       setInfraEstructura(datosInfraEstructura.data);
-    //     }catch(error){
-    //       console.log('Error al obtener Datos InfraEstructura', error);
-    //     }
-    //   }
-    //   fetchingEstructura();
-    // }, [])
+
 
 
     const changeFormDetails=()=>{

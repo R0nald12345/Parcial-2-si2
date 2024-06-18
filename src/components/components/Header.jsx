@@ -14,80 +14,9 @@ import '@szhsin/react-menu/dist/transitions/slide.css';
 
 const Header = () => {
   return (
-    <header className=' h-[7vh] md:h-[10vh] border-b border-gray-600 border-secondary-100 p-8 flex items-center justify-end bg-gray-300/70'>
+    <header className=' h-[7vh] md:h-[10vh] border-b border-gray-600 border-secondary-100 p-8 flex items-center justify-end bg-red-500/50'>
       <nav className='flex items-center gap-2'>
-        <Menu 
-          menuButton={
-            <MenuButton className='relative hover:bg-secondary-100 p-2 rounded-lg transition-colors'>
-                <IoNotifications />
-                <span 
-                    className='absolute -top-0.5 right-0 bg-primary py-0.5 px-[5px] box-content text-black rounded-full text-[8px] font-bold'>
-                  2
-                </span>
-            </MenuButton>
-          } 
-          arrow={true}
-          // arrowClassName ="bg-secondary-100"
-          align='end'
-          transition 
-          menuClassName={"bg-secondary-100 p-4"}
-          >
-            <h1 className='text-gray-900 text-center font-medium'>Notificaciones (3)</h1>
-            <hr className='my-6 border-gray-800'/>
-      
-            <MenuItem className={"p-0 hover:bg-transparent"}>
-              <Link to={'/'} className='text-gray-300 flex flex-1 items-center gap-4 py-2 px-4 hover:bg-primary-100 transition-colors rounded-lg'>
-                <RiChat1Fill className='p-2 bg-yellow-200 text-yellow-700 box-content rounded-full'/>
-                <div className='text-sm flex flex-col'>
-                  <div className='flex items-center justify-between gap-4'>
-                    <span>Nuevo comentario</span> <span className='text-[8px]'>21/10/2021</span>
-                  </div>
-                  <p className='text-gray-500 text-xs'>
-                    Ronald Camino ah comentado tu...
-                  </p>
-                </div>
-              </Link>
-            </MenuItem>
-
-            <MenuItem className={"p-0 hover:bg-transparent"}>
-              <Link to={'/'} className='text-gray-300 flex flex-1 items-center gap-4 py-2 px-4 hover:bg-primary-100 transition-colors rounded-lg'>
-                <RiChat1Fill className='p-2 bg-yellow-200 text-yellow-700 box-content rounded-full'/>
-                <div className='text-sm flex flex-col'>
-                  <div className='flex items-center justify-between gap-4'>
-                    <span>Nuevo comentario</span> <span className='text-[8px]'>21/10/2021</span>
-                  </div>
-                  <p className='text-gray-500 text-xs'>
-                    Ronald Camino ah comentado tu...
-                  </p>
-                </div>
-              </Link>
-            </MenuItem>
-           
-            <MenuItem className={"p-0 hover:bg-transparent"}>
-              <Link to={'/'} className='text-gray-300 flex flex-1 items-center gap-4 py-2 px-4 hover:bg-primary-100 transition-colors rounded-lg'>
-                <RiChat1Fill className='p-2 bg-yellow-200 text-yellow-700 box-content rounded-full'/>
-                <div className='text-sm flex flex-col'>
-                  <div className='flex items-center justify-between gap-4'>
-                    <span>Nuevo comentario</span> <span className='text-[8px]'>21/10/2021</span>
-                  </div>
-                  <p className='text-gray-500 text-xs'>
-                    Ronald Camino ah comentado tu...
-                  </p>
-                </div>
-              </Link>
-            </MenuItem>
-
-            <hr className='my-6 border-gray-800'/>
-
-            <MenuItem className={"p-0 hover:bg-transparent flex justify-center cursor-default"}>
-              <Link 
-                  to={'/'} 
-                  className='text-gray-800 text-sm font-semibold transition-colors'
-              >
-                Todas las notificaciones
-              </Link>
-            </MenuItem>
-        </Menu>
+       
 
           {/* Esta parte es la seeccion del NOmbre y foto del usuario */}
         <Menu menuButton={

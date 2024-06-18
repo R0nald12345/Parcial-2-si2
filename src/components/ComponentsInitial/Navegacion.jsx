@@ -7,11 +7,14 @@ const Navegacion = () => {
   // const [showMenu, setShowMenu] = useState(false)
   return (
     <>
-        <div className='px-5 w-full block py-2 xl:flex items-center justify-center'>
+        <div className='px-5 w-full block xl:flex-col items-center justify-center '>
 
-            <h3 className='text-white uppercase text-2xl md:text-3xl font-semibold text-center xl:w-3/5 mb-2'>
-              Página de Administración
+            <h3 className='text-white uppercase text-center text-4xl font-bold pt-2'>
+              Universidad
             </h3>  
+            <h2 className="text-center text-3xl font-semibold text-white pb-2">
+              Univ System
+            </h2>
 
 
             {/* Navegacion Menu

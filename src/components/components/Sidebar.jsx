@@ -22,8 +22,8 @@ const Sidebar = () => {
     const [showMenu, setshowMenu] = useState(false);
     const [showSubMenu, setShowSubMenu] = useState(false);
 
-    const rutaCentroRecreativo=()=>{
-        navigate('centrorecreativo');
+    const rutaAsistencia=()=>{
+        navigate('asistencia');
     }
 
     const rutaCentroSalud=()=>{
@@ -42,52 +42,52 @@ const Sidebar = () => {
         navigate('/unidadeducativa');
     }
 
-    const rutaOficinaDistrital=()=>{
-        navigate('oficinadistrital');
+    const rutaAreaMateria=()=>{
+        navigate('area-materia');
     }
 
-    const rutatelefonoUrgencia=()=>{
-        navigate('telefonourgencia');
+    const rutaLicencia=()=>{
+        navigate('licencia');
     }
 
 
 
   return (
     <>
-        <div className={`xl:h-[100vh] overflow-y-scroll fixed xl:static w-[80%] md:w-[40%] lg:w-[30%] xl:w-auto h-full  top-0 bg-green-800
+        <div className={`xl:h-[100vh] overflow-y-scroll fixed xl:static w-[80%] md:w-[40%] lg:w-[30%] xl:w-auto h-full  top-0 bg-red-600
                         p-4 flex flex-col justify-between z-50 ${showMenu ? "left-0": "-left-full"} transition-all`}>
             <div>
                 <h1 className='text-center text-2xl font-bold text-white mb-10'>
                     Administración
                 </h1>
-                <ul className='text-white text-gray-300'>
+                <ul className='text-white'>
                     <li className='mb-3'>
                         <Link to="/" 
-                        className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors
-                                    ${ location.pathname ==='/' && 'bg-primary-900/50 text-white'}`}>
-                            <FaRegChartBar className='text-primary'/> Inicio
+                        className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-red-800 text-1xl font-semibold transition-colors
+                                    ${ location.pathname ==='/' && 'bg-red-900 text-white'}`}>
+                            <FaRegChartBar className='text-primary'/> Facultades
                         </Link>
 
                     </li>
 
                     <li 
-                        onClick={rutaOficinaDistrital}
+                        onClick={rutaAreaMateria}
                         className='mb-3'>
                         <Link to="/" 
-                        className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors
-                                    ${ location.pathname ==='/oficinadistrital' && 'bg-primary-900/50 text-white'}`}>
-                            <FaRegChartBar className='text-primary'/> Oficina Distrital
+                        className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-red-800 text-1xl font-semibold transition-colors
+                                    ${ location.pathname ==='/area-materia' && 'bg-red-900 text-white'}`}>
+                            <FaRegChartBar className='text-primary'/> Areas
                         </Link>
 
                     </li>
 
                     <li 
-                        onClick={rutatelefonoUrgencia}
+                        onClick={rutaLicencia}
                         className='mb-3'>
                         <Link to="/" 
-                        className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors
-                                    ${ location.pathname ==='/telefonourgencia' && 'bg-primary-900/50 text-white'}`}>
-                            <FaRegChartBar className='text-primary'/>Telefono de Urgencia
+                        className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-red-800 text-1xl font-semibold transition-colors
+                                    ${ location.pathname ==='/licencia' && 'bg-red-900 text-white'}`}>
+                            <FaRegChartBar className='text-primary'/>Licencia
                         </Link>
 
                     </li>
@@ -95,8 +95,8 @@ const Sidebar = () => {
                         onClick={rutaUnidadEducativaConvenio}
                         className='mb-3'>
                         <Link to="/" 
-                        className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors
-                                    ${ location.pathname ==='/unidadeducativa' && 'bg-primary-900/50 text-white'}`}>
+                        className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-red-800 text-1xl font-semibold transition-colors
+                                    ${ location.pathname ==='/unidadeducativa' && 'bg-red-900 text-white'}`}>
                             <FaRegChartBar className='text-primary'/>Unidades Educativas
                         </Link>
 
@@ -153,57 +153,25 @@ const Sidebar = () => {
                         </ul>
                     </li> */}
 
-                    <li className='mb-3' onClick={rutaCentroRecreativo}>
+                    <li className='mb-3' onClick={rutaAsistencia}>
                         <Link to="/" 
-                              className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors
-                                            ${location.pathname === '/centrorecreativo' && 'bg-primary-900/50 text-white'}`}
+                              className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-red-800 text-1xl font-semibold transition-colors
+                                            ${location.pathname === '/asistencia' && 'bg-red-900 text-white'}`}
                         >
-                            <GiJumpAcross className='text-primary'/> Centros Recreativos
+                            <GiJumpAcross className='text-primary'/> Asistencia
                         </Link>
                     </li>
 
-                    <li className='mb-3' onClick={rutaCentroSalud}>
-                        <Link 
-                            to="/" 
-                            className={`flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors
-                                        ${location.pathname === '/centrosalud' && 'bg-primary-900/50 text-white'}`} 
-                        >
-                            <MdHealthAndSafety className='text-primary'/> Centros Salud
-                        </Link>
-                    </li>
-                    <li className='mb-3'>
-                        <Link to="/" className=' flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors'>
-                            <MdOutlineSportsKabaddi className='text-primary'/> Centros Deportivos
-                        </Link>
-                    </li>
-                    <li className='mb-3'>
-                        <Link to="/" className=' flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors'>
-                            <PiMountainsFill className='text-primary'/> Puntos Turísticos
-                        </Link>
-                    </li>
-                    <li className='mb-3'>
-                        <Link to="/" className=' flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors'>
-                            <GiPoliceOfficerHead className='text-primary'/> Centros Policiales
-                        </Link>
-                    </li>
-                    <li className='mb-3'>
-                        <Link to="/" className=' flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors'>
-                            <FaPersonShelter className='text-primary'/> Zona Vecinales
-                        </Link>
-                    </li>
-                    <li className='mb-3'> 
-                        <Link to="/" className=' flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50 text-1xl font-semibold transition-colors'>
-                            <BsBusFrontFill className='text-primary'/> Parada Micros
-                        </Link>
-                    </li>
+                    
+                   
                     
                 </ul>
             </div>
             <nav>
 
                 <Link 
-                    to="/inicio" 
-                    className='text-white  flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-primary-900/50  transition-colors text-1xl font-semibold'>
+                    to="/inicio/auth " 
+                    className='text-white  flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-red-800  transition-colors text-1xl font-semibold'>
                         <CiLogout className='text-primary'/> Cerrar Sesion
                 </Link>
             
