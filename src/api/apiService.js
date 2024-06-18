@@ -219,6 +219,32 @@ export const getDatoAreaId = async (id) => {
 
 
 
+export const getDatoArea = async () => {
+  try {
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const url = `${baseUrl}/api/areas`;
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      throw new Error('No token found');
+    }
+
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return response.data; // Asumiendo que los datos están en response.data
+  } catch (error) {
+    console.error('Error no se pudo obtener los Datos ApiServices getDatoGeneralLicencia', error.message);
+    return { error: 'Error al obtener los datos getDatoMateriaGrupoId' };
+  }
+};
+
+
+
 
 
 

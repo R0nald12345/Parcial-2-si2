@@ -57,6 +57,11 @@ const Lista_Asistencia = ({ fecha, asistio, atraso, idMateriaGrupo,hora }) => {
     return null; // or a loading indicator
   }
 
+
+
+  
+
+
   return (
     <>
       <ul className="w-full flex gap-1 rounded-xl mb-3 bg-white shadow-xl">
