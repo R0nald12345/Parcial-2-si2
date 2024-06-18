@@ -2,10 +2,18 @@ import { useState, useEffect } from "react";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { getDatoAreaId, getDatoMateriaGrupoId } from "../../api/apiService";
 
-const Lista_Asistencia = ({ fecha, asistio, atraso, idMateriaGrupo }) => {
+const Lista_Asistencia = ({ fecha, asistio, atraso, idMateriaGrupo,hora }) => {
   const [materiaGrupoId, setMateriaGrupoId] = useState(null);
   const [materiaAreaId, setMateriaAreaId] = useState(null);
   const [idArea, setIdArea] = useState(null);
+
+  const getHora = () => {
+    if(hora === null){
+      return "No hay hora";
+    }else{
+      return hora;
+    }
+  }
 
   const getAsistio = () => {
     return asistio ? "Si" : "No";
@@ -55,9 +63,7 @@ const Lista_Asistencia = ({ fecha, asistio, atraso, idMateriaGrupo }) => {
         <li className="font-semibold w-[10%] px-2 py-2 text-center">
           {materiaGrupoId.docenteEnsena.docenteFacultad.usuario.nombre}
         </li>
-        <li className="font-semibold w-[10%] px-2 py-2 text-center">
-          sefsd
-        </li>
+       
         <li className="font-semibold w-[8%] px-2 py-2 text-center">
           {materiaGrupoId.docenteEnsena.materia.siglas}
         </li>
@@ -70,12 +76,14 @@ const Lista_Asistencia = ({ fecha, asistio, atraso, idMateriaGrupo }) => {
         <li className="font-semibold w-[5%] px-2 py-2 text-center">
           {materiaGrupoId.id_grupo.sigla}
         </li>
-        <li className="font-semibold w-[12%] px-2 py-2 text-center">------</li>
+        <li className="font-semibold w-[18%] px-2 py-2 text-center">
+          {materiaGrupoId.id_horario.horaInicio} - {materiaGrupoId.id_horario.horaFin}
+        </li>
         <li className="font-semibold w-[15%] px-2 py-2 text-center">
           {fecha}
         </li>
-        <li className="font-semibold w-[18%] px-2 py-2 text-center">
-          {materiaGrupoId.id_horario.horaInicio} - {materiaGrupoId.id_horario.horaFin}
+        <li className="font-semibold w-[12%] px-2 py-2 text-center">
+          {getHora()}
         </li>
         <li className="font-semibold w-[5%] px-2 py-2 text-center">
           {getAsistio()}

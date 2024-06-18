@@ -34,37 +34,37 @@
          
 //           <section className="w-full">
 //             <ul className="flex bg-white gap-1 mb-3 rounded-xl shadow-lg">
-//               <li className="font-semibold text-start w-[20%] px-1 py-2" >
+//               <li className="font-semibold text-start w-[20%] px-1 py-2 " >
 //                 Docente
 //               </li>
-//               <li className="font-semibold text-start w-[8%] px-1 py-2">
+//               <li className="font-semibold text-start w-[8%] px-1 py-2 ">
 //                 Sigla
 //               </li>
-//               <li className="font-semibold text-start w-[12%] px-1 py-2">
+//               <li className="font-semibold text-start w-[12%] px-1 py-2 ">
 //                 Area
 //               </li>
-//               <li className="font-semibold text-start w-[5%] px-1 py-2">
+//               <li className="font-semibold text-start w-[5%] px-1 py-2 ">
 //                 Aula
 //               </li>
-//               <li className="font-semibold text-center w-[5%] px-1 py-2">
+//               <li className="font-semibold text-center w-[5%] px-1 py-2 ">
 //                 Grupo
 //               </li>
-//               <li className="font-semibold text-center w-[12%] px-1 py-2">
+//               <li className="font-semibold text-center w-[12%] px-1 py-2 ">
 //                 Horarios
 //               </li>
-//               <li className="font-semibold text-center w-[15%] px-1 py-2">
+//               <li className="font-semibold text-center w-[15%] px-1 py-2 ">
 //                 Fecha
 //               </li>
-//               <li className="font-semibold text-center w-[8%] px-1 py-2">
+//               <li className="font-semibold text-center w-[8%] px-1 py-2 ">
 //                 Horario Asistencia
 //               </li>
-//               <li className="font-semibold text-center w-[5%] px-1 py-2">
+//               <li className="font-semibold text-center w-[5%] px-1 py-2 ">
 //                 Falta
 //               </li>
-//               <li className="font-semibold text-center w-[5%] px-1 py-2">
+//               <li className="font-semibold text-center w-[5%] px-1 py-2 ">
 //                 Atraso
 //               </li>
-//               <li className="font-semibold text-center w-[5%] px-1 py-2">
+//               <li className="font-semibold text-center w-[5%] px-1 py-2 ">
 //                 Borrar
 //               </li>
 //             </ul>
@@ -72,23 +72,10 @@
   
 //           <section className="w-full">
 //             {datosAsistencia.map((element) => (
-//               <Lista_Asistencia
-//                 key={element.id}
-//                 id={element.id}
-//                 fecha={element.fecha}
-//                 asistio={element.asistio}
-//                 atraso={element.atraso}
-//                 // materias={element.materias}
-//                 idMateriaGrupo = {element.id_materiaGrupo}
-//               />
-//             ))}
-//           </section>
-//         </main>
-//       </>
-//     );
-//   };
+
 
 // export default Encabezado_Asistencia
+
 
 
 import { useState, useEffect } from 'react';
@@ -111,7 +98,6 @@ const Encabezado_Asistencia = () => {
           );
         }
       };
-
       fetchingListaAsistencia();
     }, []);
 
@@ -120,45 +106,40 @@ const Encabezado_Asistencia = () => {
         <main className="w-[95%] flex-col justify-center ">
           <section className="w-full">
             <ul className="flex bg-white gap-1 mb-3 rounded-xl shadow-lg">
-              <li className="font-semibold text-start w-[10%] px-1 py-2">
+              <li className="font-semibold text-start w-[10%] px-1 py-2 ">
                 Docente
               </li>
-              <li className="font-semibold text-start w-[8%] px-1 py-2">
+              <li className="font-semibold text-start w-[8%] px-1 py-2 ">
                 Sigla
               </li>
-              <li className="font-semibold text-start w-[12%] px-1 py-2">
+              <li className="font-semibold text-start w-[12%] px-1 py-2 ">
                 Area
               </li>
 
-
-
-              <li className="font-semibold text-start w-[5%] px-1 py-2">
+              <li className="font-semibold text-start w-[5%] px-1 py-2 ">
                 Aula
               </li>
-              <li className="font-semibold text-center w-[5%] px-1 py-2">
+              <li className="font-semibold text-center w-[5%] px-1 py-2 ">
                 Grupo
               </li>
-              <li className="font-semibold text-center w-[18%] px-1 py-2">
+              <li className="font-semibold text-center w-[18%] px-1 py-2 ">
                 Horario Clase
               </li>
 
-
-              <li className="font-semibold text-center w-[15%] px-1 py-2">
+              <li className="font-semibold text-center w-[15%] px-1 py-2 ">
                 Fecha
               </li>
-              <li className="font-semibold text-center w-[12%] px-1 py-2">
+              <li className="font-semibold text-center w-[12%] px-1 py-2 ">
                 Horario Asistencia
               </li>
-              <li className="font-semibold text-center w-[5%] px-1 py-2">
+              <li className="font-semibold text-center w-[5%] px-1 py-2 ">
                 Falta
               </li>
 
-
-
-              <li className="font-semibold text-center w-[5%] px-1 py-2">
+              <li className="font-semibold text-center w-[5%] px-1 py-2 ">
                 Atraso
               </li>
-              <li className="font-semibold text-center w-[5%] px-1 py-2">
+              <li className="font-semibold text-center w-[5%] px-1 py-2 ">
                 Borrar
               </li>
             </ul>
