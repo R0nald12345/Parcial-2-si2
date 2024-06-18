@@ -19,7 +19,7 @@ const Header = () => {
        
 
           {/* Esta parte es la seeccion del NOmbre y foto del usuario */}
-        <Menu menuButton={
+        {/* <Menu menuButton={
               <MenuButton className='flex items-center gap-x-2 hover:bg-secondary-100  p-2 rounded-lg transition-colors'>
                 <img src='https://img.freepik.com/foto-gratis/retrato-joven-feliz-camisa-blanca_171337-17462.jpg'
                       className='w-8 h-8 object-cover rounded-full'    
@@ -34,9 +34,9 @@ const Header = () => {
             
             transition 
             menuClassName={"bg-white p-4"}
-            
+             */}
         >
-          <MenuItem className={"p-0 hover:bg-transparent"}>
+          {/* <MenuItem className={"p-0 hover:bg-transparent"}>
             <Link className='rounded-lg transition-colors hover:bg-primary-100/90 flex items-center gap-x-4 py-2 px-6 flex-1'
               to= "/perfil"
             >
@@ -69,7 +69,7 @@ const Header = () => {
           
 
 
-        </Menu>
+        </Menu> */}
       </nav>
     </header>
   )

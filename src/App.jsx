@@ -25,6 +25,7 @@ import ListaGeneralArea from "./pages/AreaMateria/ListaGeneralArea";
 // import ListaGeneralAsistencia from "./pages/Asistencia/ListaGeneralAsistencia";
 import ListaGeneralLicencia from "./pages/Licencia/ListaGeneralLicencia";
 import ListaGeneralAsistencia from "./pages/Asistencia/ListaGeneralAsistencia";
+import ListaGeneralUsuario from "./pages/Usuario/ListaGeneralUsuario";
 
 // import UnidadEducativa from "./pages/UnidadesEducativas/UnidadEducativa";
 function App() {
@@ -50,6 +51,8 @@ function App() {
               <Route path="Licencia" element={<ListaGeneralLicencia/>}/> 
 
               <Route path="asistencia" element={<ListaGeneralAsistencia/>}/>
+
+              <Route path="usuario" element={<ListaGeneralUsuario/>}/>
 
               {/* Rutas de Unidades Educativas */}
               <Route path="unidadeducativa" element={<ListaGeneralUE/>} />

@@ -91,7 +91,7 @@ const Sidebar = () => {
                         </Link>
 
                     </li>
-                    <li 
+                    {/* <li 
                         onClick={rutaUnidadEducativaConvenio}
                         className='mb-3'>
                         <Link to="/" 
@@ -100,7 +100,7 @@ const Sidebar = () => {
                             <FaRegChartBar className='text-primary'/>Unidades Educativas
                         </Link>
 
-                    </li>
+                    </li> */}
 
                     {/* Unidades Educativas con Drop Down */}
                     {/* <li className='mb-3'>
@@ -159,6 +159,16 @@ const Sidebar = () => {
                                             ${location.pathname === '/asistencia' && 'bg-red-900 text-white'}`}
                         >
                             <GiJumpAcross className='text-primary'/> Asistencia
+                        </Link>
+                    </li>
+
+
+                    <li className='mb-3' onClick={()=>navigate('usuario')}>
+                        <Link to="/" 
+                              className={` flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-red-800 text-1xl font-semibold transition-colors
+                                            ${location.pathname === '/usuario' && 'bg-red-900 text-white'}`}
+                        >
+                            <GiJumpAcross className='text-primary'/> Usuario
                         </Link>
                     </li>
 

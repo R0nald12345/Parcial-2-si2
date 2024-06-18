@@ -70,7 +70,7 @@ const Sidebar = () => {
             </div>
         </div>
 
-        <button onClick={()=>setShowMenu(!showMenu)} className='lg:hidden fixed right-4 bottom-4 text-2xl bg-primary-900 rounded-full text-white p-1 z-50'>
+        <button onClick={()=>setShowMenu(!showMenu)} className='lg:hidden fixed right-4 bottom-4 text-2xl bg-red-800 rounded-full text-white p-1 z-50'>
             {showMenu ? <IoMdCloseCircle/> : <RiMore2Fill/>}
             
         </button>

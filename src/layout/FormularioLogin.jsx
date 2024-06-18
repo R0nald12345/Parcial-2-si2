@@ -50,7 +50,7 @@ const FormularioLogin = () => {
 
   return (
     <>
-      <div className=' w-[80%] md:w-1/2 bg-white/50 block xl:flex justify-center rounded-lg mx-auto mt-52'>
+      <div className=' w-[80%] md:w-1/2 bg-white/50 block xl:flex justify-center rounded-lg mx-auto mt-32'>
         <form 
           onSubmit={(e) => fetchingLogin(e)}
           className=' rounded-lg xl:w-1/2 p-5'>

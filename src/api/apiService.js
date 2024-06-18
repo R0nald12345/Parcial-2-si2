@@ -248,48 +248,57 @@ export const getDatoArea = async () => {
 
 
 
+//U  S  U  A  R  I O  S 
 
-// // Función para obtener datos de asistencia
-// export const getDatoAsistencia = async () => {
-//   try {
-//     const token = localStorage.getItem('token');
+export const getDatoGeneralUsuarios = async () => {
+  try {
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const url = `${baseUrl}/api/usuarios`;
 
-//     if (!token) {
-//       throw new Error('No token found');
-//     }
+    const token = localStorage.getItem('token');
 
-//     const response = await axios.get( `${baseUrl}/api/asistencia`, {
-  
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
+    if (!token) {
+      throw new Error('No token found');
+    }
 
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error no se pudo obtener los Datos ApiServices getDatoAsistencia', error.message);
-//     return { error: 'Error al obtener los datos' };
-//   }
-// };
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
-// // Función para obtener datos de materiaGrupo por ID
-// export const getMateriaGrupo = async (id) => {
-//   try {
-//     const token = localStorage.getItem('token');
+    return response.data; // Asumiendo que los datos están en response.data
+  } catch (error) {
+    console.error('Error no se pudo obtener los Datos ApiServices getDatoGeneralUsuarios', error.message);
+    return { error: 'Error al obtener los datos' };
+  }
+};
 
-//     if (!token) {
-//       throw new Error('No token found');
-//     }
 
-//     const response = await axios.get(`http://192.168.56.1:8080/api/materiaGrupo/${id}`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
 
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error no se pudo obtener los Datos ApiServices getMateriaGrupo', error.message);
-//     return { error: 'Error al obtener los datos' };
-//   }
-// };
+export const crearUsuariosFacultad = async (id_usuario, id_facultad) => {
+  try {
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const url = `${baseUrl}/api/usuarios`;
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      throw new Error('No token found');
+    }
+
+    const response = await axios.post(url, {
+      id_usuario,
+      id_facultad
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return response.data; // Asumiendo que los datos están en response.data
+  } catch (error) {
+    console.error('Error no se pudo obtener los Datos ApiServices getDatoGeneralUsuarios', error.message);
+    return { error: 'Error al obtener los datos' };
+  }
+};
