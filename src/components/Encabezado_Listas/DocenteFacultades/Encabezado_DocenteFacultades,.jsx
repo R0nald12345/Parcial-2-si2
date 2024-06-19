@@ -4,7 +4,6 @@ import Lista_DocenteFacu from '../../Listas/DocenteFacultades/Lista_DocenteFacul
 
 const Encabezado_DocenteFacultades = () => {
   const [datosListaDocenteFacu, setDatosListaDocenteFacu] = useState([]);
-  const [turno, setTurno] = useState([]);
 
 
   useEffect(() => {
