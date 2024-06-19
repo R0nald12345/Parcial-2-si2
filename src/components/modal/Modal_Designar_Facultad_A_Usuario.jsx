@@ -1,8 +1,14 @@
-import { useState, useEffect } from "react";
-import { crearUsuariosFacultad } from "../../api/apiService";
+
+import { useNavigate } from 'react-router-dom';
 
 const Modal_Designar_Facultad_A_Usuario = ({ id, open, onClose, nombre, apellidoPaterno, apellidoMaterno, cargo, opcionFacultad }) => {
+  const navigate = useNavigate();
+
   if (!open) return null;
+
+  const handleDesignarClick = () => {
+    navigate('/docenteFacu');
+  };
 
   return (
     <>
@@ -35,7 +41,10 @@ const Modal_Designar_Facultad_A_Usuario = ({ id, open, onClose, nombre, apellido
             </div>
           </div>
           <div className="flex justify-center">
-            <button className="bg-green-600 hover:bg-green-700 font-semibold mt-5 text-white py-2 px-5 rounded-xl">
+            <button
+              className="bg-green-600 hover:bg-green-700 font-semibold mt-5 text-white py-2 px-5 rounded-xl"
+              onClick={handleDesignarClick}
+            >
               Designar
             </button>
           </div>
