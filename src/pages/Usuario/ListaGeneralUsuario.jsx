@@ -23,8 +23,6 @@ const ListaGeneralUsuario = () => {
                   className="w-full font-semibold rounded-xl py-1 bg-gray-300 px-1 outline-none"
                 />
               </div>
-  
-             
             </section>
   
             <section className="flex gap-12 pl-2 pr-3">

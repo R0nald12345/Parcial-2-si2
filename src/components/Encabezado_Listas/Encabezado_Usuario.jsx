@@ -55,6 +55,7 @@ const Encabezado_Usuario = () => {
                 Acciones
               </li>
             </ul>
+
           </section>
   
           <section className="w-full">

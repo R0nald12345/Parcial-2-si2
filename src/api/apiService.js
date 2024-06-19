@@ -78,8 +78,10 @@ export const getDatoGeneralArea = async () => {
         Authorization: `Bearer ${token}`
       }
     });
-
+    console.log('Desde Api Service')
+    
     return response.data; // Asumiendo que los datos están en response.data
+    
   } catch (error) {
     console.error('Error no se pudo obtener los Datos ApiServices getDatoGeneralFacultades', error.message);
     return { error: 'Error al obtener los datos' };
