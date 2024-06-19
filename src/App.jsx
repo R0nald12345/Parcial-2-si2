@@ -26,6 +26,7 @@ import ListaGeneralArea from "./pages/AreaMateria/ListaGeneralArea";
 import ListaGeneralLicencia from "./pages/Licencia/ListaGeneralLicencia";
 import ListaGeneralAsistencia from "./pages/Asistencia/ListaGeneralAsistencia";
 import ListaGeneralUsuario from "./pages/Usuario/ListaGeneralUsuario";
+import Materia_Grupo from "./pages/Usuario/Materia_Grupo";
 import DocenteFacultades from "./pages/DocenteFacultades/DocentesFacultades";
 
 // import UnidadEducativa from "./pages/UnidadesEducativas/UnidadEducativa";
@@ -42,6 +43,7 @@ function App() {
 
             {/* Para Dashboard Completo */}
             <Route path="/" element={<LayoutAdmin/>} >
+            
             {/* <Route path="/" element={<ListaGeneralFacultades/>} > */}
               <Route index element={<ListaGeneralFacultades/>}/>
 
@@ -55,6 +57,7 @@ function App() {
               <Route path="docenteFacu" element={<DocenteFacultades/>}/>
 
               <Route path="usuario" element={<ListaGeneralUsuario/>}/>
+              <Route path="usuario/materia-grupo" element={<Materia_Grupo/>}/>
 
               {/* Rutas de Unidades Educativas */}
               <Route path="unidadeducativa" element={<ListaGeneralUE/>} />

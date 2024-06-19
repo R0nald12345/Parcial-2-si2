@@ -1,25 +1,26 @@
 import {useState,useEffect} from 'react'
-import Lista_Usuario from '../Listas/Lista_Usuario';
-import { getDatoGeneralUsuarios } from '../../api/apiService';
+import { getDatoGeneralMateriaGrupo } from '../../api/apiService';
+import Lista_Materia_Grupo from '../Listas/Lista_Materia_Grupo';
 
-const Encabezado_Usuario = () => {
-    const [datosListaUsuario, setDatosListaUsuario] = useState([]);
-    const [turno, setTurno] = useState([]);
+const Encabezado_Materia_Grupo = () => {
+    const [listaMateriaGrupo, setListaMateriaGrupo] = useState([]);
+    const[listaMateria, setListaMateria] = useState([]);
+    const[listaFacultad, setListaFacultad] = useState([]);
   
   
     useEffect(() => {
-      const fetchingListaUsuario = async () => {
+      const fetchingMateriaGrupo = async () => {
         try {
-          const response = await getDatoGeneralUsuarios();
-          setDatosListaUsuario(response);
+          const response = await getDatoGeneralMateriaGrupo();
+          setListaMateriaGrupo(response);
         } catch (error) {
           console.log(
-            "Error en Componente ListaGeneral fetchingListaFacultad",
+            "Error en Componente ListaGeneral fetchingMateriaGrupo",
             error
           );
         }
       };
-      fetchingListaUsuario();
+      fetchingMateriaGrupo();
     }, []);
   
   
@@ -58,22 +59,20 @@ const Encabezado_Usuario = () => {
           </section>
   
   
-          <section className="w-full">
-            {datosListaUsuario.map((element) => (
-              <Lista_Usuario
-                id={element.id}
-                nombre={element.nombre}
-                apellidoPaterno={element.apellidoPaterno}
-                apellidoMaterno={element.apellidoMaterno}
-                email={element.email}
-                telefono={element.telefono}
-                cargo={element.rol.cargo}
+          {/* <section className="w-full">
+            {listaMateriaGrupo.map((element) => (
+              <Lista_Materia_Grupo
+                key = {element.id}
+                nombre = {}
+                telefono = {}
+                facultad = {}
               />
             ))}
-          </section>
+          </section> */}
         </main>
     
       </>
     );
   };
-export default Encabezado_Usuario
+
+export default Encabezado_Materia_Grupo;

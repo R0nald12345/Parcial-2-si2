@@ -79,7 +79,7 @@ export const getDatoGeneralArea = async () => {
       }
     });
     console.log('Desde Api Service')
-    
+
     return response.data; // Asumiendo que los datos están en response.data
     
   } catch (error) {
@@ -301,6 +301,31 @@ export const crearUsuariosFacultad = async (id_usuario, id_facultad) => {
     return response.data; // Asumiendo que los datos están en response.data
   } catch (error) {
     console.error('Error no se pudo obtener los Datos ApiServices getDatoGeneralUsuarios', error.message);
+    return { error: 'Error al obtener los datos' };
+  }
+};
+
+//M  A  T  E  R  I  A      G  R  U  P  O
+export const getDatoGeneralMateriaGrupo = async () => {
+  try {
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const url = `${baseUrl}/api/materiaGrupo`;
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      throw new Error('No token found');
+    }
+
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return response.data; // Asumiendo que los datos están en response.data
+  } catch (error) {
+    console.error('Error no se pudo obtener los Datos ApiServices getDatoGeneralMateriaGrupo', error.message);
     return { error: 'Error al obtener los datos' };
   }
 };
