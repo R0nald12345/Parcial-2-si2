@@ -4,11 +4,16 @@ import Encabezado_Asistencia from "../../components/Encabezado_Listas/Encabezado
 import { getDatoArea } from "../../api/apiService";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import * as XLSX from 'xlsx';
 
 const ListaGeneralAsistencia = () => {
   const [listaArea, setListaArea] = useState([]);
   const [opcionBusqueda, setOpcionBusqueda] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [filtroAsistio, setFiltroAsistio] = useState("");
+  const [filtroAtraso, setFiltroAtraso] = useState("");
 
   useEffect(() => {
     const fetchingListaArea = async () => {
@@ -34,12 +39,24 @@ const ListaGeneralAsistencia = () => {
 
   const generarPDF = () => {
     const contenido = document.getElementById("contenidoParaPDF");
+
     html2canvas(contenido).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = 210;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
       pdf.save("lista_asistencia.pdf");
     });
+  };
+
+  const generarExcel = () => {
+    const tablaDatos = document.getElementById("tablaAsistencia");
+    const workbook = XLSX.utils.table_to_book(tablaDatos, { sheet: "Asistencias" });
+    XLSX.writeFile(workbook, "lista_asistencia.xlsx");
   };
 
   return (
@@ -74,6 +91,35 @@ const ListaGeneralAsistencia = () => {
                 </option>
               ))}
             </select>
+
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="rounded-xl py-1 pl-2 font-semibold bg-gray-300"
+            />
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="rounded-xl py-1 pl-2 font-semibold bg-gray-300"
+            />
+            <select
+              className="w-full rounded-xl py-1 pl-2 font-semibold bg-gray-300"
+              onChange={(e) => setFiltroAsistio(e.target.value)}
+            >
+              <option value="">Asistió</option>
+              <option value="true">Sí</option>
+              <option value="false">No</option>
+            </select>
+            <select
+              className="w-full rounded-xl py-1 pl-2 font-semibold bg-gray-300"
+              onChange={(e) => setFiltroAtraso(e.target.value)}
+            >
+              <option value="">Atraso</option>
+              <option value="true">Sí</option>
+              <option value="false">No</option>
+            </select>
           </section>
 
           <section className="flex gap-12 pl-2 pr-3">
@@ -85,6 +131,7 @@ const ListaGeneralAsistencia = () => {
                 PDF
               </button>
               <button
+                onClick={generarExcel}
                 className="text-white font-new-font font-new-bold bg-green-600 rounded-lg py-3 px-5"
               >
                 Excel
@@ -94,7 +141,13 @@ const ListaGeneralAsistencia = () => {
         </section>
       </section>
       <div id="contenidoParaPDF" className="w-[95%]">
-        <Encabezado_Asistencia selectedOption={selectedOption} />
+        <Encabezado_Asistencia
+          selectedOption={selectedOption}
+          startDate={startDate}
+          endDate={endDate}
+          filtroAsistio={filtroAsistio}
+          filtroAtraso={filtroAtraso}
+        />
       </div>
     </div>
   );
