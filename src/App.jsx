@@ -74,6 +74,7 @@ function App() {
               {/* <Route path="centrorecreativo" element={<CentroRecreativo/>}/> */}
             </Route>
               {/* <Route index element={<Principal/>} /> */}
+              {/*Hola mundo*/}
           </Routes>
         </Router>
 
