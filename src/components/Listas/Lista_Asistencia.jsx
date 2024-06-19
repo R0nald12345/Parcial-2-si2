@@ -89,9 +89,6 @@ const Lista_Asistencia = ({ fecha, asistio, atraso, idMateriaGrupo, hora }) => {
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
         {getAtraso()}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-        <RiDeleteBin5Line className="text-3xl text-red-700" />
-      </td>
     </tr>
   );
 };

@@ -77,7 +77,6 @@ const Encabezado_Asistencia = ({ selectedOption, startDate, endDate, filtroAsist
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Horario Asistencia</th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Falta</th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Atraso</th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Borrar</th>
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
@@ -86,7 +85,7 @@ const Encabezado_Asistencia = ({ selectedOption, startDate, endDate, filtroAsist
             key={element.id}
             id={element.id}
             fecha={element.fecha}
-            asistio={element.asistio}
+            asistio={element.falta}
             atraso={element.atraso}
             idMateriaGrupo={element.id_materiaGrupo}
             hora={element.hora}

@@ -128,8 +128,8 @@ const ListaGeneralAsistencia = () => {
               onChange={(e) => setFiltroAsistio(e.target.value)}
             >
               <option value="">Todos</option>
-              <option value="true">Sí</option>
-              <option value="false">No</option>
+              <option value="false">Sí</option>
+              <option value="true">No</option>
             </select>
           </section>
 
