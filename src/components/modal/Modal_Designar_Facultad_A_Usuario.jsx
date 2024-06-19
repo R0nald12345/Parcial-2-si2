@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { crearUsuariosFacultad } from "../../api/apiService";
 
 const Modal_Designar_Facultad_A_Usuario = ({ id, open, onClose, nombre, apellidoPaterno, apellidoMaterno, cargo, opcionFacultad }) => {
+  
   if (!open) return null;
 
   return (

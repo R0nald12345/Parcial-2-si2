@@ -4,9 +4,12 @@ import Modal_Designar_Facultad_A_Usuario from '../modal/Modal_Designar_Facultad_
 import { getDatoGeneralFacultades } from '../../api/apiService';
 
 const Lista_Usuario = ({ id, nombre, apellidoPaterno, apellidoMaterno, email, telefono, cargo }) => {
+  
   const [opcionFacultad, setOpcionFacultad] = useState([]);
 
   const [openModal, setOpenModal] = useState(false);
+
+
 
   useEffect(() => {
     const fetchingListaFacultad = async () => {
