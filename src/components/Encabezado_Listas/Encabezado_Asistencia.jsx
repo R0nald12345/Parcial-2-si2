@@ -1,17 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Lista_Asistencia from '../Listas/Lista_Asistencia';
-import { getDatoAsistencia } from '../../api/apiService';
-import axios from 'axios';
+import { getDatoAsistencia, getDatoMateriaGrupoId } from '../../api/apiService';
+import { useDebounce } from '../../customHooks/useDebounce';
 
-const Encabezado_Asistencia = ({ selectedOption, startDate, endDate, filtroAsistio, filtroAtraso }) => {
+const Encabezado_Asistencia = ({ selectedOption, startDate, endDate, filtroAsistio, filtroAtraso, filtroNombre }) => {
   const [datosAsistencia, setDatosAsistencia] = useState([]);
-  const [filteredDatosAsistencia, setFilteredDatosAsistencia] = useState([]);
+  const [materiaGrupoMap, setMateriaGrupoMap] = useState({});
+
+  const debouncedFiltroNombre = useDebounce(filtroNombre, 300);
 
   useEffect(() => {
     const fetchingListaAsistencia = async () => {
       try {
         const response = await getDatoAsistencia();
         setDatosAsistencia(response);
+
+        const materiaGrupoIds = [...new Set(response.map(dato => dato.id_materiaGrupo))];
+        const materiaGrupoPromises = materiaGrupoIds.map(id => getDatoMateriaGrupoId(id));
+        const materiaGrupoResponses = await Promise.all(materiaGrupoPromises);
+        
+        const newMateriaGrupoMap = {};
+        materiaGrupoResponses.forEach(response => {
+          newMateriaGrupoMap[response.id] = response;
+        });
+        setMateriaGrupoMap(newMateriaGrupoMap);
       } catch (error) {
         console.log("Error en Componente ListaGeneral fetchingListaAsistencia", error);
       }
@@ -19,57 +31,37 @@ const Encabezado_Asistencia = ({ selectedOption, startDate, endDate, filtroAsist
     fetchingListaAsistencia();
   }, []);
 
-  useEffect(() => {
-    const fetchMateriaGrupo = async (idMateriaGrupo) => {
-      try {
-        const baseUrl = import.meta.env.VITE_BASE_URL;
-        const accessToken = localStorage.getItem('token');
-        const response = await axios.get(`${baseUrl}/api/materiaGrupo/${idMateriaGrupo}`, {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        });
-        return response.data.docenteEnsena.materia.id_area;
-      } catch (error) {
-        console.error("Error fetching materiaGrupo data", error);
-        return null;
-      }
-    };
+  const filteredDatosAsistencia = useMemo(() => {
+    let filtered = datosAsistencia;
 
-    const filterDatosAsistencia = async () => {
-      let filtered = datosAsistencia;
+    if (selectedOption) {
+      filtered = filtered.filter(dato => materiaGrupoMap[dato.id_materiaGrupo]?.docenteEnsena.materia.id_area === parseInt(selectedOption, 10));
+    }
 
-      if (selectedOption) {
-        filtered = [];
-        for (const dato of datosAsistencia) {
-          const idArea = await fetchMateriaGrupo(dato.id_materiaGrupo);
-          if (idArea === parseInt(selectedOption, 10)) {
-            filtered.push(dato);
-          }
-        }
-      }
+    if (startDate) {
+      filtered = filtered.filter(dato => new Date(dato.fecha) >= new Date(startDate));
+    }
 
-      if (startDate) {
-        filtered = filtered.filter(dato => new Date(dato.fecha) >= new Date(startDate));
-      }
+    if (endDate) {
+      filtered = filtered.filter(dato => new Date(dato.fecha) <= new Date(endDate));
+    }
 
-      if (endDate) {
-        filtered = filtered.filter(dato => new Date(dato.fecha) <= new Date(endDate));
-      }
+    if (filtroAsistio) {
+      filtered = filtered.filter(dato => String(dato.asistio) === filtroAsistio);
+    }
 
-      if (filtroAsistio) {
-        filtered = filtered.filter(dato => String(dato.asistio) === filtroAsistio);
-      }
+    if (filtroAtraso) {
+      filtered = filtered.filter(dato => String(dato.atraso) === filtroAtraso);
+    }
 
-      if (filtroAtraso) {
-        filtered = filtered.filter(dato => String(dato.atraso) === filtroAtraso);
-      }
+    if (debouncedFiltroNombre) {
+      filtered = filtered.filter(dato => 
+        materiaGrupoMap[dato.id_materiaGrupo]?.docenteEnsena.docenteFacultad.usuario.nombre.toLowerCase().includes(debouncedFiltroNombre.toLowerCase())
+      );
+    }
 
-      setFilteredDatosAsistencia(filtered);
-    };
-
-    filterDatosAsistencia();
-  }, [selectedOption, startDate, endDate, filtroAsistio, filtroAtraso, datosAsistencia]);
+    return filtered;
+  }, [datosAsistencia, selectedOption, startDate, endDate, filtroAsistio, filtroAtraso, debouncedFiltroNombre, materiaGrupoMap]);
 
   return (
     <table id="tablaAsistencia" className="min-w-full divide-y divide-gray-200">
