@@ -4,11 +4,17 @@ import Encabezado_Asistencia from "../../components/Encabezado_Listas/Encabezado
 import { getDatoArea } from "../../api/apiService";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import * as XLSX from 'xlsx';
 
 const ListaGeneralAsistencia = () => {
   const [listaArea, setListaArea] = useState([]);
   const [opcionBusqueda, setOpcionBusqueda] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [filtroAsistio, setFiltroAsistio] = useState("");
+  const [filtroAtraso, setFiltroAtraso] = useState("");
+  const [filtroNombre, setFiltroNombre] = useState("");
 
   useEffect(() => {
     const fetchingListaArea = async () => {
@@ -34,12 +40,24 @@ const ListaGeneralAsistencia = () => {
 
   const generarPDF = () => {
     const contenido = document.getElementById("contenidoParaPDF");
+
     html2canvas(contenido).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = 210;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
       pdf.save("lista_asistencia.pdf");
     });
+  };
+
+  const generarExcel = () => {
+    const tablaDatos = document.getElementById("tablaAsistencia");
+    const workbook = XLSX.utils.table_to_book(tablaDatos, { sheet: "Asistencias" });
+    XLSX.writeFile(workbook, "lista_asistencia.xlsx");
   };
 
   return (
@@ -60,42 +78,101 @@ const ListaGeneralAsistencia = () => {
                 type="text"
                 placeholder="Buscar"
                 className="w-full font-semibold rounded-xl py-1 bg-gray-300 px-1 outline-none"
+                value={filtroNombre}
+                onChange={(e) => setFiltroNombre(e.target.value)}
               />
             </div>
+          </section>
 
+          <section className="flex items-center justify-end px-3 gap-3">
+            <p className="font-new-font font-new-bold text-white">Área</p>
             <select
-              className="w-full rounded-xl py-1 pl-2 font-semibold bg-gray-300"
+              className="py-1 px-1 rounded-md outline-none font-semibold"
+              value={selectedOption}
               onChange={handleDropdownChange}
             >
-              <option value="">Seleccione un área</option>
+              <option value="">Todas</option>
               {opcionBusqueda.map((option) => (
-                <option value={option.value} key={option.value}>
+                <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
               ))}
             </select>
           </section>
 
-          <section className="flex gap-12 pl-2 pr-3">
-            <div className="flex col-span-1 gap-3">
-              <button
-                onClick={generarPDF}
-                className="text-white font-new-font font-new-bold bg-red-600 rounded-lg py-3 px-5"
-              >
-                PDF
-              </button>
-              <button
-                className="text-white font-new-font font-new-bold bg-green-600 rounded-lg py-3 px-5"
-              >
-                Excel
-              </button>
-            </div>
+          <section className="flex items-center justify-end px-3 gap-3">
+            <p className="font-new-font font-new-bold text-white">Fecha Inicio</p>
+            <input
+              type="date"
+              className="py-1 px-1 rounded-md outline-none font-semibold"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </section>
+
+          <section className="flex items-center justify-end px-3 gap-3">
+            <p className="font-new-font font-new-bold text-white">Fecha Fin</p>
+            <input
+              type="date"
+              className="py-1 px-1 rounded-md outline-none font-semibold"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </section>
+
+          <section className="flex items-center justify-end px-3 gap-3">
+            <p className="font-new-font font-new-bold text-white">Falta</p>
+            <select
+              className="py-1 px-1 rounded-md outline-none font-semibold"
+              value={filtroAsistio}
+              onChange={(e) => setFiltroAsistio(e.target.value)}
+            >
+              <option value="">Todos</option>
+              <option value="false">Sí</option>
+              <option value="true">No</option>
+            </select>
+          </section>
+
+          <section className="flex items-center justify-end px-3 gap-3">
+            <p className="font-new-font font-new-bold text-white">Atraso</p>
+            <select
+              className="py-1 px-1 rounded-md outline-none font-semibold"
+              value={filtroAtraso}
+              onChange={(e) => setFiltroAtraso(e.target.value)}
+            >
+              <option value="">Todos</option>
+              <option value="true">Sí</option>
+              <option value="false">No</option>
+            </select>
           </section>
         </section>
       </section>
-      <div id="contenidoParaPDF" className="w-[95%]">
-        <Encabezado_Asistencia selectedOption={selectedOption} />
-      </div>
+
+      <section className="w-[90%] flex justify-end mb-5">
+        <button
+          onClick={generarPDF}
+          className="py-2 px-5 mr-2 bg-red-600 text-white rounded-lg font-semibold"
+        >
+          Exportar PDF
+        </button>
+        <button
+          onClick={generarExcel}
+          className="py-2 px-5 bg-green-600 text-white rounded-lg font-semibold"
+        >
+          Exportar Excel
+        </button>
+      </section>
+
+      <section className="w-[90%]" id="contenidoParaPDF">
+        <Encabezado_Asistencia
+          selectedOption={selectedOption}
+          startDate={startDate}
+          endDate={endDate}
+          filtroAsistio={filtroAsistio}
+          filtroAtraso={filtroAtraso}
+          filtroNombre={filtroNombre}
+        />
+      </section>
     </div>
   );
 };

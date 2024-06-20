@@ -1,17 +1,29 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Lista_Asistencia from '../Listas/Lista_Asistencia';
-import { getDatoAsistencia } from '../../api/apiService';
-import axios from 'axios';
+import { getDatoAsistencia, getDatoMateriaGrupoId } from '../../api/apiService';
+import { useDebounce } from '../../customHooks/useDebounce';
 
-const Encabezado_Asistencia = ({ selectedOption }) => {
+const Encabezado_Asistencia = ({ selectedOption, startDate, endDate, filtroAsistio, filtroAtraso, filtroNombre }) => {
   const [datosAsistencia, setDatosAsistencia] = useState([]);
-  const [filteredDatosAsistencia, setFilteredDatosAsistencia] = useState([]);
+  const [materiaGrupoMap, setMateriaGrupoMap] = useState({});
+
+  const debouncedFiltroNombre = useDebounce(filtroNombre, 300);
 
   useEffect(() => {
     const fetchingListaAsistencia = async () => {
       try {
         const response = await getDatoAsistencia();
         setDatosAsistencia(response);
+
+        const materiaGrupoIds = [...new Set(response.map(dato => dato.id_materiaGrupo))];
+        const materiaGrupoPromises = materiaGrupoIds.map(id => getDatoMateriaGrupoId(id));
+        const materiaGrupoResponses = await Promise.all(materiaGrupoPromises);
+        
+        const newMateriaGrupoMap = {};
+        materiaGrupoResponses.forEach(response => {
+          newMateriaGrupoMap[response.id] = response;
+        });
+        setMateriaGrupoMap(newMateriaGrupoMap);
       } catch (error) {
         console.log("Error en Componente ListaGeneral fetchingListaAsistencia", error);
       }
@@ -19,98 +31,68 @@ const Encabezado_Asistencia = ({ selectedOption }) => {
     fetchingListaAsistencia();
   }, []);
 
-  useEffect(() => {
-    const fetchMateriaGrupo = async (idMateriaGrupo) => {
-      try {
-        const baseUrl = import.meta.env.VITE_BASE_URL;
-        const accessToken = localStorage.getItem('token');
-        const response = await axios.get(`${baseUrl}/api/materiaGrupo/${idMateriaGrupo}`, {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        });
-        return response.data.docenteEnsena.materia.id_area;
-      } catch (error) {
-        console.error("Error fetching materiaGrupo data", error);
-        return null;
-      }
-    };
+  const filteredDatosAsistencia = useMemo(() => {
+    let filtered = datosAsistencia;
 
-    const filterDatosAsistencia = async () => {
-      if (selectedOption) {
-        const filtered = [];
-        for (const dato of datosAsistencia) {
-          const idArea = await fetchMateriaGrupo(dato.id_materiaGrupo);
-          if (idArea === parseInt(selectedOption, 10)) {
-            filtered.push(dato);
-          }
-        }
-        setFilteredDatosAsistencia(filtered);
-      } else {
-        setFilteredDatosAsistencia(datosAsistencia);
-      }
-    };
+    if (selectedOption) {
+      filtered = filtered.filter(dato => materiaGrupoMap[dato.id_materiaGrupo]?.docenteEnsena.materia.id_area === parseInt(selectedOption, 10));
+    }
 
-    filterDatosAsistencia();
-  }, [selectedOption, datosAsistencia]);
-  
+    if (startDate) {
+      filtered = filtered.filter(dato => new Date(dato.fecha) >= new Date(startDate));
+    }
+
+    if (endDate) {
+      filtered = filtered.filter(dato => new Date(dato.fecha) <= new Date(endDate));
+    }
+
+    if (filtroAsistio) {
+      filtered = filtered.filter(dato => String(dato.asistio) === filtroAsistio);
+    }
+
+    if (filtroAtraso) {
+      filtered = filtered.filter(dato => String(dato.atraso) === filtroAtraso);
+    }
+
+    if (debouncedFiltroNombre) {
+      filtered = filtered.filter(dato => 
+        materiaGrupoMap[dato.id_materiaGrupo]?.docenteEnsena.docenteFacultad.usuario.nombre.toLowerCase().includes(debouncedFiltroNombre.toLowerCase())
+      );
+    }
+
+    return filtered;
+  }, [datosAsistencia, selectedOption, startDate, endDate, filtroAsistio, filtroAtraso, debouncedFiltroNombre, materiaGrupoMap]);
 
   return (
-    <>
-      <main className="w-[95%] flex-col justify-center ">
-        <section className="w-full">
-          <ul className="flex bg-white gap-1 mb-3 rounded-xl shadow-lg">
-            <li className="font-semibold text-start w-[10%] px-1 py-2 ">
-              Docente
-            </li>
-            <li className="font-semibold text-start w-[8%] px-1 py-2 ">
-              Sigla
-            </li>
-            <li className="font-semibold text-start w-[12%] px-1 py-2 ">
-              Area
-            </li>
-            <li className="font-semibold text-start w-[5%] px-1 py-2 ">
-              Aula
-            </li>
-            <li className="font-semibold text-center w-[5%] px-1 py-2 ">
-              Grupo
-            </li>
-            <li className="font-semibold text-center w-[18%] px-1 py-2 ">
-              Horario Clase
-            </li>
-            <li className="font-semibold text-center w-[15%] px-1 py-2 ">
-              Fecha
-            </li>
-            <li className="font-semibold text-center w-[12%] px-1 py-2 ">
-              Horario Asistencia
-            </li>
-            <li className="font-semibold text-center w-[5%] px-1 py-2 ">
-              Falta
-            </li>
-            <li className="font-semibold text-center w-[5%] px-1 py-2 ">
-              Atraso
-            </li>
-            <li className="font-semibold text-center w-[5%] px-1 py-2 ">
-              Borrar
-            </li>
-          </ul>
-        </section>
-
-        <section className="w-full">
-          {filteredDatosAsistencia.map((element) => (
-            <Lista_Asistencia
-              key={element.id}
-              id={element.id}
-              fecha={element.fecha}
-              asistio={element.asistio}
-              atraso={element.atraso}
-              idMateriaGrupo={element.id_materiaGrupo}
-              hora={element.hora}
-            />
-          ))}
-        </section>
-      </main>
-    </>
+    <table id="tablaAsistencia" className="min-w-full divide-y divide-gray-200">
+      <thead className="bg-gray-50">
+        <tr>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Docente</th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sigla</th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Área</th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aula</th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grupo</th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Horario Clase</th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Horario Asistencia</th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Falta</th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Atraso</th>
+        </tr>
+      </thead>
+      <tbody className="bg-white divide-y divide-gray-200">
+        {filteredDatosAsistencia.map((element) => (
+          <Lista_Asistencia
+            key={element.id}
+            id={element.id}
+            fecha={element.fecha}
+            asistio={element.falta}
+            atraso={element.atraso}
+            idMateriaGrupo={element.id_materiaGrupo}
+            hora={element.hora}
+          />
+        ))}
+      </tbody>
+    </table>
   );
 };
 
