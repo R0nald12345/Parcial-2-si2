@@ -36,12 +36,12 @@ function App() {
         <Router> {/* Envuelve todo dentro del componente Router */}
           <Routes>
 
-            <Route path="/inicio" element={<Principal/>}>
-              <Route path="auth" element={<VentanaLogin/>} />
+            <Route path="/" element={<Principal/>}>
+              <Route index element={<VentanaLogin/>} />
             </Route>
 
             {/* Para Dashboard Completo */}
-            <Route path="/" element={<LayoutAdmin/>} >
+            <Route path="/inicio" element={<LayoutAdmin/>} >
             
             {/* <Route path="/" element={<ListaGeneralFacultades/>} > */}
               <Route index element={<ListaGeneralFacultades/>}/>

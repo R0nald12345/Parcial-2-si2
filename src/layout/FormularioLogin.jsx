@@ -40,7 +40,7 @@ const FormularioLogin = () => {
             showConfirmButton: false,
             timer: 1500
           });
-          navigate('/');
+          navigate('/inicio');
         }
       }
     } catch (error) {
